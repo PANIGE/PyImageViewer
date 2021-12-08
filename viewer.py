@@ -1,10 +1,13 @@
-import pip
-
-
+import sys
 try:
-    __import__("PIL")
+    import pip
+    try:
+        __import__("PIL")
+    except ImportError:
+        pip.main(['install', "Pillow"])   
 except ImportError:
-    pip.main(['install', "Pillow"])   
+    print("Please install pip3 for your version of python")
+    sys.exit(0)
 from PIL import Image
 import os
 import sys
