@@ -9,13 +9,6 @@ except ImportError:
     print("Please install pip3 for your version of python")
     sys.exit(0)
 from PIL import Image
-import os
-import sys
-
-args = sys.argv
-
-char = "██"
-colored = True
 
   
 
@@ -24,7 +17,7 @@ def rgb(red, green, blue):
   return f'\x1b[38;2;{red};{green};{blue}m'
 
 
-def printPic(file, size, char="██"):
+def printPic(file, size, char="███", colorQuality=256):
     print(rgb(255,255,255))
     file = args[1]
     file.strip("'")
@@ -36,14 +29,23 @@ def printPic(file, size, char="██"):
     pixels = list(img.getdata())
     width, height = img.size
     pixels = [pixels[i * width:(i + 1) * width] for i in range(height)]
-    os.system("cls")
     for y in pixels:
         for x in y:
+            a = x[3] if len(x) > 3 else 255
+            x = [x[0], x[1], x[2], a]
+            x[0] = int((int((x[0] / 256)*colorQuality)/colorQuality)*x[3])
+            x[1] = int((int((x[1] / 256)*colorQuality)/colorQuality)*x[3])
+            x[2] = int((int((x[2] / 256)*colorQuality)/colorQuality)*x[3])
+            
             if colored:
                 print(rgb(x[0], x[1], x[2]) + char, end="")
             else:
                 avg = int(sum((x[0], x[1], x[2])) / 3)
                 print(rgb(avg, avg, avg) + char, end="")
         print(rgb(255,255,255))
-        
-printPic(args[1], int(args[2]))
+
+if __name__ == "__main__":
+    args = sys.argv
+    colored = True
+    qual = int(args[3]) if len(args) > 2 else 256
+    printPic(args[1], int(args[2]), colorQuality=qual)
