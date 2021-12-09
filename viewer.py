@@ -11,14 +11,18 @@ except ImportError:
     sys.exit(0)
 from PIL import Image
 
-colored = True
 
 
-def rgb(red, green, blue):
-  return f'\x1b[38;2;{red};{green};{blue}m'
+
+def rgb(red, green, blue, colored=True):
+    if colored:
+        return f'\x1b[38;2;{red};{green};{blue}m'
+    else:
+        avg = int(sum((red, green, blue)) / 3)
+        return f'\x1b[38;2;{avg};{avg};{avg}m'
 
 
-def printPic(file, size, char="███", colorQuality=256):
+def printPic(file, size, char="███", colorQuality=256, colored=True):
     print(rgb(255,255,255))
     file = args[1]
     file.strip("'")
@@ -41,11 +45,11 @@ def printPic(file, size, char="███", colorQuality=256):
                 print(rgb(x[0], x[1], x[2]) + char, end="")
             else:
                 avg = int(sum((x[0], x[1], x[2])) / 3)
-                
                 print(rgb(avg, avg, avg) + char, end="")
         print(rgb(255,255,255))
 
 if __name__ == "__main__":
     args = sys.argv
     qual = int(args[3]) if len(args) > 3 else 256
-    printPic(args[1], int(args[2]), colorQuality=qual)
+    colored = int(args[4])==1 if len(args) > 4 else True
+    printPic(args[1], int(args[2]), colorQuality=qual, colored=colored)
