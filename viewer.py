@@ -1,4 +1,5 @@
 import sys
+from math import ceil
 try:
     import pip
     try:
@@ -10,7 +11,7 @@ except ImportError:
     sys.exit(0)
 from PIL import Image
 
-colored = True
+colored = False
 
 
 def rgb(red, green, blue):
@@ -33,14 +34,14 @@ def printPic(file, size, char="███", colorQuality=256):
         for x in y:
             a = x[3] if len(x) > 3 else 255
             x = [x[0], x[1], x[2], a]
-            x[0] = int((int((x[0] / 256)*colorQuality)/colorQuality)*x[3])
-            x[1] = int((int((x[1] / 256)*colorQuality)/colorQuality)*x[3])
-            x[2] = int((int((x[2] / 256)*colorQuality)/colorQuality)*x[3])
-            
+            x[0] = int((round((x[0] / 256)*colorQuality)/colorQuality)*x[3])
+            x[1] = int((round((x[1] / 256)*colorQuality)/colorQuality)*x[3])
+            x[2] = int((round((x[2] / 256)*colorQuality)/colorQuality)*x[3])
             if colored:
                 print(rgb(x[0], x[1], x[2]) + char, end="")
             else:
                 avg = int(sum((x[0], x[1], x[2])) / 3)
+                
                 print(rgb(avg, avg, avg) + char, end="")
         print(rgb(255,255,255))
 
