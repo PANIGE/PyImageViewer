@@ -11,6 +11,7 @@ except ImportError:
 from PIL import Image
 
   
+colored = True
 
 
 def rgb(red, green, blue):
@@ -46,6 +47,5 @@ def printPic(file, size, char="███", colorQuality=256):
 
 if __name__ == "__main__":
     args = sys.argv
-    colored = True
     qual = int(args[3]) if len(args) > 2 else 256
     printPic(args[1], int(args[2]), colorQuality=qual)
