@@ -11,7 +11,7 @@ except ImportError:
     sys.exit(0)
 from PIL import Image
 
-colored = False
+colored = True
 
 
 def rgb(red, green, blue):
