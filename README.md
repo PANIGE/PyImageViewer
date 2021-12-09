@@ -5,5 +5,5 @@ will install pillow if not installed, requires pip3
 
 Usage
 ```bash
-python3 viewer.py {image Path} {Max Size (in px)} [Color Quality (256 max)]
+python3 viewer.py {image Path} {Max Size (in px)} [Color Quality (256 max)] [colored (1/0)]
 ```
